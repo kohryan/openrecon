@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [master, main]
   pull_request:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
         with:
           enable-cache: true
       - name: Install
-        run: uv pip install --system -e ".[dev,ai]"
+        run: uv pip install -e ".[dev,ai]"
       - name: Lint
         run: ruff check openrecon tests
       - name: Test
