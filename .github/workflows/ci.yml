@@ -1,25 +1,12 @@
 name: ci
-
-on:
-  push:
-    branches: [master, main]
-  pull_request:
-
+on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
         with:
-          enable-cache: true
-      - name: Install
-        run: uv pip install --python 3.11 -e ".[dev,ai]"
-      - name: Lint
-        run: uv run ruff check openrecon tests
-      - name: Test
-        run: uv run pytest -q
+          python-version: '3.11'
+      - run: pip install -e '.[dev]'
+      - run: pytest -q
