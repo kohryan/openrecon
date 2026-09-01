@@ -25,7 +25,7 @@ jobs:
       - name: Install
         run: uv pip install -e ".[dev,ai]"
       - name: Lint
-        run: ruff check openrecon tests
+        run: python -m ruff check openrecon tests
       - name: Test
         # The suite is hermetic: no collector reaches the network.
         run: pytest -q
