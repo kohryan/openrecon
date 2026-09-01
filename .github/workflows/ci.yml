@@ -23,7 +23,9 @@ jobs:
       - name: Create venv
         run: uv venv
       - name: Install
-        run: uv pip install -e ".[dev,ai]"
+        run: |
+          uv pip install -e ".[dev,ai]"
+          uv pip install ruff
       - name: Lint
         run: python -m ruff check openrecon tests
       - name: Test
