@@ -1,0 +1,33 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/openrecon
+    permissions:
+      id-token: write  # For trusted publishing (no token needed)
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install build tools
+        run: pip install build
+      
+      - name: Build package
+        run: python -m build
+      
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # For trusted publishing, no API token needed
+        # Configure at https://pypi.org/manage/account/publishing/
